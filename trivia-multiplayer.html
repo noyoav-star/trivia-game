@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>טריוויית האלופים 🏆</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Heebo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0f1e;
+    --surface: #111827;
+    --surface2: #1e2a3a;
+    --blue: #3b82f6;
+    --blue-light: #60a5fa;
+    --blue-dark: #2563eb;
+    --blue-pale: rgba(59,130,246,0.15);
+    --green: #10b981;
+    --green-pale: rgba(16,185,129,0.15);
+    --red: #ef4444;
+    --red-pale: rgba(239,68,68,0.15);
+    --text: #f1f5f9;
+    --text2: #94a3b8;
+    --muted: #64748b;
+    --border: rgba(255,255,255,0.08);
+    --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Heebo', sans-serif;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 20px;
+    background-image:
+      radial-gradient(ellipse at 10% 0%, rgba(37,99,235,0.2) 0%, transparent 55%),
+      radial-gradient(ellipse at 90% 100%, rgba(59,130,246,0.1) 0%, transparent 50%);
+  }
+  .screen { width: 100%; max-width: 480px; animation: fadeUp 0.35s ease; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+  h1 {
+    font-family: 'Sora', sans-serif; font-weight: 800;
+    font-size: clamp(1.8rem, 6vw, 2.8rem);
+    background: linear-gradient(135deg, var(--blue-dark), var(--blue-light));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    text-align: center; margin-bottom: 6px;
+  }
+  .subtitle { color: var(--muted); text-align: center; margin-bottom: 24px; font-size: 0.9rem; }
+
+  .card {
+    background: var(--surface); border-radius: 20px;
+    padding: 22px; border: 1.5px solid var(--border);
+    margin-bottom: 14px; box-shadow: var(--shadow);
+  }
+  .card h2 {
+    font-family: 'Sora', sans-serif; font-size: 0.95rem; font-weight: 700;
+    color: var(--blue); margin-bottom: 14px;
+  }
+
+  .inp {
+    width: 100%; background: var(--surface2);
+    border: 1.5px solid var(--border); border-radius: 12px;
+    padding: 11px 14px; color: var(--text);
+    font-family: 'Heebo', sans-serif; font-size: 0.95rem;
+    outline: none; transition: border 0.2s; margin-bottom: 8px;
+  }
+  .inp:focus { border-color: var(--blue); }
+  .inp::placeholder { color: var(--muted); }
+
+  .avatar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  #myAvatarPreview {
+    width: 48px; height: 48px; border-radius: 50%;
+    border: 2px solid var(--border); background: var(--blue-pale);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; cursor: pointer; overflow: hidden; flex-shrink: 0;
+    transition: border-color 0.2s;
+  }
+  #myAvatarPreview:hover { border-color: var(--blue); }
+
+  .divider {
+    display: flex; align-items: center; gap: 10px;
+    color: var(--muted); font-size: 0.85rem; margin: 16px 0;
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  .btn-main {
+    width: 100%;
+    background: linear-gradient(135deg, var(--blue), var(--blue-light));
+    border: none; border-radius: 14px; color: white;
+    font-size: 1.05rem; font-weight: 700; padding: 15px;
+    cursor: pointer; font-family: 'Heebo', sans-serif;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 18px rgba(37,99,235,0.35);
+    margin-bottom: 10px;
+  }
+  .btn-main:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(37,99,235,0.45); }
+  .btn-main.secondary {
+    background: var(--surface2);
+    box-shadow: none; color: var(--text2);
+    border: 1.5px solid var(--border);
+  }
+  .btn-main.secondary:hover { border-color: var(--blue); color: var(--blue); box-shadow: none; transform: none; }
+
+  /* ROOM CODE */
+  .room-code-box {
+    background: var(--blue-pale); border: 2px solid var(--blue);
+    border-radius: 16px; padding: 16px; text-align: center; margin-bottom: 16px;
+  }
+  .room-code-box .label { font-size: 0.8rem; color: var(--blue-light); margin-bottom: 4px; }
+  .room-code-box .code {
+    font-family: 'Sora', sans-serif; font-size: 2.2rem; font-weight: 800;
+    color: white; letter-spacing: 6px;
+  }
+
+  /* QUESTION SCREEN */
+  .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .round-label { font-weight: 700; font-size: 0.88rem; color: var(--blue); background: var(--blue-pale); padding: 5px 14px; border-radius: 20px; }
+  .category-badge { font-size: 0.8rem; color: var(--text2); background: var(--surface); border: 1.5px solid var(--border); padding: 5px 12px; border-radius: 20px; }
+  .progress-bar { background: var(--border); border-radius: 10px; height: 5px; margin-bottom: 18px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue-dark), var(--blue-light)); border-radius: 10px; transition: width 0.5s; }
+  .question-box {
+    background: var(--surface); border-radius: 18px; padding: 22px;
+    margin-bottom: 14px; border: 1.5px solid var(--border);
+    box-shadow: var(--shadow); min-height: 80px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .question-box p { font-size: 1.1rem; line-height: 1.65; text-align: center; font-weight: 700; }
+  .answers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+  .answer-btn {
+    background: var(--surface2); border: 1.5px solid var(--border);
+    border-radius: 12px; color: var(--text);
+    padding: 12px 8px; cursor: pointer;
+    font-family: 'Heebo', sans-serif; font-size: 0.88rem; font-weight: 600;
+    transition: all 0.18s; text-align: center; line-height: 1.3;
+  }
+  .answer-btn:hover:not(:disabled) { border-color: var(--blue); background: var(--blue-pale); color: var(--blue); }
+  .answer-btn.correct { background: var(--green-pale); border-color: var(--green); color: var(--green); }
+  .answer-btn.selected-correct { background: var(--green-pale); border-color: var(--green); color: var(--green); font-weight: 800; }
+  .answer-btn.selected-wrong { background: var(--red-pale); border-color: var(--red); color: var(--red); font-weight: 800; }
+  .answer-btn:disabled { cursor: default; }
+  .explanation-box {
+    background: rgba(245,158,11,0.1); border: 1.5px solid rgba(245,158,11,0.3);
+    border-radius: 12px; padding: 11px 14px;
+    font-size: 0.86rem; color: #fcd34d; line-height: 1.5; margin-bottom: 10px;
+  }
+  .waiting-msg { text-align: center; color: var(--muted); font-size: 0.88rem; padding: 8px; }
+
+  /* SCORE ROWS */
+  .score-row {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--surface); border: 1.5px solid var(--border);
+    border-radius: 14px; padding: 12px 16px; margin-bottom: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .score-row-name { flex: 1; font-weight: 700; font-size: 0.95rem; }
+  .score-row-change { font-size: 0.82rem; color: var(--green); font-weight: 700; min-width: 26px; }
+  .score-row-pts { font-weight: 900; font-size: 1rem; color: var(--blue); background: var(--blue-pale); padding: 4px 12px; border-radius: 20px; }
+
+  /* ROUND SCREEN */
+  .round-title { font-family: 'Sora', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--blue-light); text-align: center; margin-bottom: 4px; }
+  .round-sub { color: var(--muted); text-align: center; font-size: 0.88rem; margin-bottom: 20px; }
+  .winner-banner { font-family: 'Sora', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--blue-light); text-align: center; padding: 14px 0 20px; }
+
+  /* WAIT SCREEN */
+  .wait-center { text-align: center; padding: 40px 20px; }
+  .wait-center .big { font-size: 3rem; margin-bottom: 16px; }
+  .wait-center p { color: var(--muted); font-size: 1rem; }
+  .loading-dots { display: flex; gap: 7px; justify-content: center; margin-top: 16px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--blue-light); animation: bounce 1.2s infinite; }
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-10px)} }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- HOME SCREEN -->
+<div id="homeScreen" class="screen">
+  <h1>🏆 טריוויית האלופים</h1>
+  <p class="subtitle">משחק טריוויה מולטיפלייר עם שאלות AI</p>
+
+  <div class="card">
+    <h2>👤 הפרטים שלך</h2>
+    <div class="avatar-row">
+      <div id="myAvatarPreview" onclick="document.getElementById('avatarInput').click()">🙂</div>
+      <input type="file" id="avatarInput" accept="image/*" style="display:none" onchange="previewMyAvatar(this)">
+      <input class="inp" id="createName" placeholder="השם שלך" style="margin:0;flex:1">
+    </div>
+    <input class="inp" id="createCategory" placeholder="🎯 קטגוריה שאתה טוב בה (כדורגל, היסטוריה...)">
+    <label style="font-size:0.85rem;color:var(--muted);display:block;margin-bottom:6px">מספר סיבובים:</label>
+    <select class="inp" id="createRounds" id="roundsInput">
+      <option value="2">2 סיבובים</option>
+      <option value="4" selected>4 סיבובים</option>
+      <option value="6">6 סיבובים</option>
+      <option value="8">8 סיבובים</option>
+      <option value="10">10 סיבובים</option>
+    </select>
+    <button class="btn-main" onclick="createRoom()">🚀 צור חדר חדש</button>
+
+    <div class="divider">או הצטרף לחדר קיים</div>
+
+    <input class="inp" id="joinCode" placeholder="קוד חדר (5 אותיות)" style="text-transform:uppercase;letter-spacing:3px;text-align:center;font-size:1.2rem;font-weight:700">
+    <input class="inp" id="joinName" placeholder="השם שלך">
+    <input class="inp" id="joinCategory" placeholder="🎯 הקטגוריה שלך">
+    <button class="btn-main secondary" onclick="joinRoom()">🔗 הצטרף לחדר</button>
+  </div>
+</div>
+
+<!-- LOBBY SCREEN -->
+<div id="lobbyScreen" class="screen hidden">
+  <h1>🏆 טריוויית האלופים</h1>
+  <div class="room-code-box">
+    <div class="label">שתפו את הקוד עם החברים</div>
+    <div class="code" id="roomCodeDisplay">-----</div>
+  </div>
+  <div class="card">
+    <h2>👥 שחקנים בחדר</h2>
+    <div id="lobbyPlayerList"></div>
+  </div>
+  <button class="btn-main" id="startGameBtn" onclick="startGame()" style="display:none">🚀 התחל משחק!</button>
+  <p id="waitForHostLobby" style="text-align:center;color:var(--muted);font-size:0.9rem;margin-top:10px">ממתין למארח שיתחיל את המשחק...</p>
+</div>
+
+<!-- WAIT SCREEN -->
+<div id="waitScreen" class="screen hidden">
+  <div class="wait-center">
+    <div class="big">⏳</div>
+    <p id="waitMsg">ממתין לשאלה הבאה...</p>
+    <div class="loading-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+  </div>
+</div>
+
+<!-- QUESTION SCREEN -->
+<div id="questionScreen" class="screen hidden">
+  <div class="top-bar">
+    <span class="round-label" id="roundLabel">סיבוב 1</span>
+    <span class="category-badge" id="categoryBadge">📚 כללי</span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <div class="question-box"><p id="questionText"></p></div>
+  <div class="answers-grid" id="answersGrid"></div>
+  <div class="explanation-box" id="explanationBox" style="display:none"></div>
+  <div class="waiting-msg" id="waitingForOthers" style="display:none">⏳ ממתין לשאר השחקנים...</div>
+</div>
+
+<!-- ROUND RESULTS SCREEN -->
+<div id="roundScreen" class="screen hidden">
+  <div class="round-title" id="roundResultTitle">סיבוב הסתיים!</div>
+  <div class="round-sub" id="roundResultSub"></div>
+  <div id="roundScoreList" style="margin-bottom:18px"></div>
+  <button class="btn-main" id="roundNextBtn" onclick="nextRound()">סיבוב הבא ➜</button>
+  <p id="waitForHostMsg" style="text-align:center;color:var(--muted);font-size:0.88rem;margin-top:10px;display:none">ממתין למארח שיתחיל את הסיבוב הבא...</p>
+</div>
+
+<!-- FINAL SCORE SCREEN -->
+<div id="scoreScreen" class="screen hidden">
+  <h1>🏆 תוצאות סופיות</h1>
+  <div class="winner-banner" id="winnerBanner"></div>
+  <div id="scoreList"></div>
+  <button class="btn-main" onclick="location.reload()" style="margin-top:10px">🔄 משחק חדש</button>
+</div>
+
+
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+<script>
+  firebase.initializeApp({ databaseURL: "https://yoav123-default-rtdb.firebaseio.com" });
+  const db = firebase.database();
+
+  let roomCode=null, myName=null, myCategory=null, myAvatar=null;
+  let isHost=false, totalRounds=4, currentRound=0;
+  let currentAnswers=[], hasAnswered=false;
+  let roundStarted=false, resultsShown=-1;
+
+  function show(id) {
+    ['homeScreen','lobbyScreen','questionScreen','roundScreen','scoreScreen','waitScreen'].forEach(s=>{
+      const el=document.getElementById(s);
+      if(el) el.classList.toggle('hidden', s!==id);
+    });
+  }
+
+  function genCode() { return Math.random().toString(36).substring(2,7).toUpperCase(); }
+
+  function avatarHtml(src, size) {
+    size = size || 38;
+    if(src && src.startsWith('data:'))
+      return '<img src="'+src+'" style="width:'+size+'px;height:'+size+'px;border-radius:50%;object-fit:cover;flex-shrink:0">';
+    return '<div style="width:'+size+'px;height:'+size+'px;border-radius:50%;background:var(--blue-pale);display:flex;align-items:center;justify-content:center;font-size:'+Math.floor(size*0.45)+'px;flex-shrink:0">🙂</div>';
+  }
+
+  function shuffle(arr) {
+    for(var i=arr.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=arr[i];arr[i]=arr[j];arr[j]=t;}
+    return arr;
+  }
+
+  window.previewMyAvatar = function(input) {
+    var file=input.files[0]; if(!file) return;
+    var reader=new FileReader();
+    reader.onload=function(e){
+      myAvatar=e.target.result;
+      document.getElementById('myAvatarPreview').innerHTML='<img src="'+myAvatar+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">';
+    };
+    reader.readAsDataURL(file);
+  };
+
+  window.createRoom = async function() {
+    myName=document.getElementById('createName').value.trim()||'מארח';
+    myCategory=document.getElementById('createCategory').value.trim()||'כללי';
+    totalRounds=parseInt(document.getElementById('createRounds').value)||4;
+    isHost=true; roomCode=genCode();
+    var playerData={};
+    playerData[myName]={name:myName,category:myCategory,avatar:myAvatar||'',score:0,joinedAt:Date.now()};
+    await db.ref('rooms/'+roomCode).set({host:myName,status:'lobby',totalRounds:totalRounds,currentRound:0,players:playerData});
+    document.getElementById('roomCodeDisplay').textContent=roomCode;
+    startLobbyListener();
+    show('lobbyScreen');
+  };
+
+  window.joinRoom = async function() {
+    var code=document.getElementById('joinCode').value.trim().toUpperCase();
+    myName=document.getElementById('joinName').value.trim()||'שחקן';
+    myCategory=document.getElementById('joinCategory').value.trim()||'כללי';
+    if(!code) return alert('הכנס קוד חדר!');
+    var snap=await db.ref('rooms/'+code).get();
+    if(!snap.exists()) return alert('חדר לא נמצא! בדוק את הקוד.');
+    if(snap.val().status!=='lobby') return alert('המשחק כבר התחיל!');
+    roomCode=code; isHost=false;
+    await db.ref('rooms/'+roomCode+'/players/'+myName).update({name:myName,category:myCategory,avatar:myAvatar||'',score:0,joinedAt:Date.now()});
+    document.getElementById('roomCodeDisplay').textContent=roomCode;
+    startLobbyListener();
+    show('lobbyScreen');
+  };
+
+  function startLobbyListener() {
+    db.ref('rooms/'+roomCode).on('value', function(snap){
+      if(!snap.exists()) return;
+      var room=snap.val();
+      var players=room.players?Object.values(room.players).sort(function(a,b){return a.joinedAt-b.joinedAt;}):[];
+      var list=document.getElementById('lobbyPlayerList');
+      if(list && !document.getElementById('lobbyScreen').classList.contains('hidden')) {
+        list.innerHTML=players.map(function(p){
+          return '<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border-radius:12px;margin-bottom:8px;">'+avatarHtml(p.avatar,36)+'<div><div style="font-weight:700;font-size:0.95rem">'+p.name+(p.name===room.host?' 👑':'')+'</div><div style="font-size:0.78rem;color:var(--muted)">📚 '+p.category+'</div></div></div>';
+        }).join('');
+      }
+      document.getElementById('startGameBtn').style.display=isHost?'block':'none';
+      document.getElementById('waitForHostLobby').style.display=isHost?'none':'block';
+      if(room.status==='question') startRound(room);
+      if(room.status==='results') showRoundResults(room);
+      if(room.status==='finished') showFinalScores(room);
+    });
+  }
+
+  window.startGame = async function() {
+    if(!isHost) return;
+    var snap=await db.ref('rooms/'+roomCode+'/players').get();
+    var players=snap.val()?Object.values(snap.val()):[];
+    await db.ref('rooms/'+roomCode).update({currentRound:0,usedQuestions:{}});
+    await loadAndPublishQuestion(0, players);
+  };
+
+  async function loadAndPublishQuestion(round, players) {
+    var roundPlayer=players[round%players.length];
+    var cat=(roundPlayer&&roundPlayer.category)||'כללי';
+    show('waitScreen');
+    document.getElementById('waitMsg').textContent='טוען שאלה...';
+    try {
+      var snap=await db.ref('rooms/'+roomCode+'/usedQuestions').get();
+      var used=snap.val()?Object.values(snap.val()):[];
+      var avoidList=used.slice(-50).join(' | ');
+      var prompt='אתה מנהל משחק טריוויה. צור שאלת טריוויה חדשה לגמרי בעברית בנושא: "'+cat+'".\nחוקים חשובים:\n- השאלה חייבת להיות שונה לחלוטין מכל השאלות הבאות: '+(avoidList||'אין עדיין')+'\n- אל תשאל על אותו נושא ספציפי פעמיים\n- גוון בין: היסטוריה, מדע, גאוגרפיה, ספורט, תרבות, טכנולוגיה, טבע\n- השאלה צריכה להיות מעניינת, ברורה, ובעלת תשובה חד משמעית\nהחזר JSON בדיוק בפורמט הזה ללא כלום אחר:\n{"q":"השאלה","a":["תשובה נכונה","תשובה שגויה 1","תשובה שגויה 2","תשובה שגויה 3"],"correct":0,"explain":"הסבר קצר"}';
+      var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,messages:[{role:'user',content:prompt}]})});
+      var data=await res.json();
+      var json=JSON.parse(data.content[0].text.trim().replace(/```json?|```/g,'').trim());
+      var answers=json.a.map(function(a,i){return {text:a,isCorrect:i===json.correct};});
+      shuffle(answers);
+      await db.ref('rooms/'+roomCode).update({status:'question',currentRound:round,currentQuestion:{q:json.q,answers:answers,explain:json.explain,category:cat},answers:null,totalRounds:totalRounds});
+      await db.ref('rooms/'+roomCode+'/usedQuestions').push(json.q);
+    } catch(e) {
+      var answers=[{text:"פריז",isCorrect:true},{text:"לונדון",isCorrect:false},{text:"ברלין",isCorrect:false},{text:"רומא",isCorrect:false}];
+      await db.ref('rooms/'+roomCode).update({status:'question',currentRound:round,currentQuestion:{q:"מה הבירה של צרפת?",answers:answers,explain:"פריז היא הבירה של צרפת.",category:cat},answers:null,totalRounds:totalRounds});
+    }
+  }
+
+  function startRound(room) {
+    if(roundStarted && currentRound===room.currentRound) return;
+    roundStarted=true; hasAnswered=false;
+    currentAnswers=room.currentQuestion&&room.currentQuestion.answers?room.currentQuestion.answers:[];
+    currentRound=room.currentRound||0;
+    totalRounds=room.totalRounds||totalRounds;
+    document.getElementById('roundLabel').textContent='סיבוב '+(currentRound+1)+' מתוך '+totalRounds;
+    document.getElementById('progressFill').style.width=((currentRound/totalRounds)*100)+'%';
+    document.getElementById('categoryBadge').textContent='📚 '+(room.currentQuestion&&room.currentQuestion.category?room.currentQuestion.category:'כללי');
+    document.getElementById('questionText').textContent=room.currentQuestion&&room.currentQuestion.q?room.currentQuestion.q:'';
+    document.getElementById('explanationBox').style.display='none';
+    document.getElementById('waitingForOthers').style.display='none';
+    var grid=document.getElementById('answersGrid');
+    grid.innerHTML='';
+    currentAnswers.forEach(function(ans,i){
+      var btn=document.createElement('button');
+      btn.className='answer-btn'; btn.textContent=ans.text;
+      btn.onclick=(function(idx,correct,explain,rm){return function(){submitAnswer(idx,correct,explain,rm);};})(i,ans.isCorrect,room.currentQuestion&&room.currentQuestion.explain,room);
+      grid.appendChild(btn);
+    });
+    show('questionScreen');
+    db.ref('rooms/'+roomCode+'/answers').on('value', function(snap){
+      var answersData=snap.val()||{};
+      var playerCount=Object.keys(room.players||{}).length;
+      var answered=Object.keys(answersData).length;
+      if(hasAnswered) document.getElementById('waitingForOthers').textContent='⏳ ענו '+answered+' מתוך '+playerCount+' שחקנים...';
+      if(answered>=playerCount && isHost) {
+        setTimeout(async function(){
+          var pSnap=await db.ref('rooms/'+roomCode+'/players').get();
+          var aSnap=await db.ref('rooms/'+roomCode+'/answers').get();
+          await db.ref('rooms/'+roomCode).update({status:'results',resultsPlayers:pSnap.val(),resultsAnswers:aSnap.val()});
+        },800);
+      }
+    });
+  }
+
+  async function submitAnswer(index, isCorrect, explain, room) {
+    if(hasAnswered) return;
+    hasAnswered=true;
+    var btns=document.querySelectorAll('.answer-btn');
+    btns.forEach(function(b,i){b.disabled=true; if(currentAnswers[i]&&currentAnswers[i].isCorrect) b.classList.add('correct');});
+    btns[index].classList.add(isCorrect?'selected-correct':'selected-wrong');
+    if(isCorrect) {
+      var sSnap=await db.ref('rooms/'+roomCode+'/players/'+myName+'/score').get();
+      await db.ref('rooms/'+roomCode+'/players/'+myName+'/score').set((sSnap.val()||0)+1);
+    }
+    await db.ref('rooms/'+roomCode+'/answers/'+myName).set({answered:true,correct:isCorrect});
+    if(explain){document.getElementById('explanationBox').textContent='💡 '+explain;document.getElementById('explanationBox').style.display='block';}
+    document.getElementById('waitingForOthers').style.display='block';
+  }
+
+  function showRoundResults(room) {
+    if(resultsShown===room.currentRound) return;
+    resultsShown=room.currentRound; roundStarted=false;
+    var players=room.resultsPlayers?Object.values(room.resultsPlayers).sort(function(a,b){return b.score-a.score;}) : [];
+    var answersInfo=room.resultsAnswers||{};
+    document.getElementById('roundResultTitle').textContent='סיבוב '+((room.currentRound||0)+1)+' הסתיים!';
+    var remaining=(room.totalRounds||totalRounds)-(room.currentRound||0)-1;
+    document.getElementById('roundResultSub').textContent=remaining>0?'נשארו עוד '+remaining+' סיבובים':'זה היה הסיבוב האחרון!';
+    var list=document.getElementById('roundScoreList');
+    list.innerHTML='';
+    players.forEach(function(p,i){
+      var gained=answersInfo[p.name]&&answersInfo[p.name].correct?'+1':'';
+      var medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)+'.';
+      list.innerHTML+='<div class="score-row"><span style="font-size:1.3rem;min-width:28px">'+medal+'</span>'+avatarHtml(p.avatar,38)+'<div class="score-row-name">'+p.name+'</div><div class="score-row-change">'+gained+'</div><div class="score-row-pts">'+p.score+' נק׳</div></div>';
+    });
+    var isLast=(room.currentRound||0)+1>=(room.totalRounds||totalRounds);
+    document.getElementById('roundNextBtn').textContent=isLast?'🏆 לתוצאות הסופיות':'סיבוב הבא ➜';
+    document.getElementById('roundNextBtn').style.display=isHost?'block':'none';
+    document.getElementById('waitForHostMsg').style.display=isHost?'none':'block';
+    show('roundScreen');
+  }
+
+  window.nextRound = async function() {
+    if(!isHost) return;
+    var snap=await db.ref('rooms/'+roomCode).get();
+    var room=snap.val();
+    var next=(room.currentRound||0)+1;
+    if(next>=(room.totalRounds||totalRounds)) {
+      await db.ref('rooms/'+roomCode).update({status:'finished'});
+    } else {
+      var players=Object.values(room.players||{}).sort(function(a,b){return a.joinedAt-b.joinedAt;});
+      await loadAndPublishQuestion(next,players);
+    }
+  };
+
+  async function showFinalScores(room) {
+    var snap=await db.ref('rooms/'+roomCode+'/players').get();
+    var players=Object.values(snap.val()||{}).sort(function(a,b){return b.score-a.score;});
+    document.getElementById('winnerBanner').textContent='🎉 '+(players[0]&&players[0].name?players[0].name:'?')+' מנצח!';
+    var list=document.getElementById('scoreList');
+    list.innerHTML='';
+    players.forEach(function(p,i){
+      var medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1);
+      var div=document.createElement('div');
+      div.className='score-row'; div.style.marginBottom='10px';
+      div.innerHTML='<span style="font-size:1.4rem;min-width:30px">'+medal+'</span>'+avatarHtml(p.avatar,42)+'<div class="score-row-name">'+p.name+'<br><small style="color:var(--muted);font-size:0.78rem">'+(p.category||'כללי')+'</small></div><div class="score-row-pts">'+p.score+'/'+(room.totalRounds||totalRounds)+'</div>';
+      list.appendChild(div);
+    });
+    show('scoreScreen');
+    setTimeout(function(){db.ref('rooms/'+roomCode).remove();},300000);
+  }
+
+  window.addEventListener('DOMContentLoaded', function(){show('homeScreen');});
+</script>
+-e 
+</body>
+</html>
